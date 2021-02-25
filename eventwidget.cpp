@@ -44,6 +44,7 @@ void EventWidget::updateEvents(Event ev) {
   auto *slt = new QVBoxLayout(this);
   auto *descLbl = new QLabel(event.desc, this);
   descLbl->setTextFormat(Qt::RichText);
+  descLbl->setWordWrap(true);
   slt->addWidget(descLbl);
   slt->addItem(
       new QSpacerItem(10, 10, QSizePolicy::Fixed, QSizePolicy::Expanding));
