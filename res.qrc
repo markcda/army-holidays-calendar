@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="/">
+        <file>arts/16/view-refresh.svg</file>
+        <file>arts/16/edit-delete.svg</file>
+        <file>arts/16/edit.svg</file>
+        <file>arts/16/list-add.svg</file>
+        <file>arts/16/view-calendar-month.svg</file>
+        <file>arts/16/view-calendar-upcoming-days.svg</file>
+        <file>arts/16/calendar-go-today.svg</file>
+        <file>arts/64/office-calendar.svg</file>
+    </qresource>
+</RCC>
