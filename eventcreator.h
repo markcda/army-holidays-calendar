@@ -1,9 +1,9 @@
 #ifndef EVENTCREATOR_H
 #define EVENTCREATOR_H
 
-#include "typebox.h"
 #include "data.h"
 #include "event.h"
+#include "typebox.h"
 #include <QCheckBox>
 #include <QDate>
 #include <QDialog>
@@ -12,7 +12,6 @@
 #include <QLabel>
 #include <QLineEdit>
 #include <QPushButton>
-#include <QRegExp>
 #include <QSpacerItem>
 #include <QSpinBox>
 #include <QSqlDatabase>
@@ -51,9 +50,10 @@ private:
   const QStringList months = {"january",   "february", "march",    "april",
                               "may",       "june",     "july",     "august",
                               "september", "october",  "november", "december"};
-  const QStringList monthsInRus = {"Январь",   "Февраль", "Март",   "Апрель",
-                                   "Май",      "Июнь",    "Июль",   "Август",
-                                   "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"};
+  const QStringList monthsInRus = {"1. Январь",   "2. Февраль", "3. Март",
+                                   "4. Апрель",   "5. Май",     "6. Июнь",
+                                   "7. Июль",     "8. Август",  "9. Сентябрь",
+                                   "10. Октябрь", "11. Ноябрь", "12. Декабрь"};
   const QStringList colors = {"Желтый", "Зеленый", "Красный", "Синий"};
 
   void eventTypeChanged();
@@ -81,7 +81,8 @@ private:
     if ((pos1 == -1) or (pos2 == -1))
       return s;
     QString es = "";
-    for (int i = pos1 + QString("<br><p><b>Контакты:<br>").length(); i < pos2; i++)
+    for (int i = pos1 + QString("<br><p><b>Контакты:<br>").length(); i < pos2;
+         i++)
       es.append(s[i]);
     return es;
   }

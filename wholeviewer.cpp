@@ -3,7 +3,6 @@
 WholeViewer::WholeViewer(Data *_data, QWidget *parent) : QWidget(parent) {
   data = _data;
   clt = new QGridLayout();
-  clt->setMargin(0);
   clt->setContentsMargins(0, 0, 0, 0);
   clt->setSpacing(0);
   updateEvents();

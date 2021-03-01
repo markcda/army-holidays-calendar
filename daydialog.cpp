@@ -12,7 +12,6 @@ DayDialog::DayDialog(Data *_data, QDate _date, QList<Event> *_evs,
   if (data->getSetting("dp-one").toString() == "no")
     move(data->getSetting("dp").toPoint());
   auto *clt = new QGridLayout();
-  clt->setMargin(0);
   clt->setContentsMargins(0, 0, 0, 0);
   clt->setSpacing(0);
   auto *sa = new QScrollArea(this);

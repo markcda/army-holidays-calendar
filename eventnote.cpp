@@ -3,10 +3,12 @@
 EventNote::EventNote(Data *_data, Event _event, QWidget *parent)
     : QLabel(parent) {
   data = _data;
-  setAlignment(Qt::AlignHCenter);
+  setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
   redraw(_event);
   setIndent(2);
+  setMargin(2);
   setWordWrap(true);
+  setScaledContents(true);
 }
 
 void EventNote::redraw(Event ev) {

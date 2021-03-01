@@ -28,6 +28,23 @@ MonthViewer::MonthViewer(Data *_data, QDate _date, QWidget *parent)
           .height() -
       1);
   headLt->addWidget(titleLbl);
+  yearSpinBox = new QSpinBox(this);
+  yearSpinBox->setMinimum(0);
+  yearSpinBox->setMaximum(2030);
+  yearSpinBox->setValue(date.year());
+  yearSpinBox->setMaximumWidth(
+      QFontMetrics(yearSpinBox->font()).boundingRect("999999999").width());
+  headLt->addWidget(yearSpinBox);
+  connect(yearSpinBox, QOverload<int>::of(&QSpinBox::valueChanged), this,
+          &MonthViewer::goYear);
+  monthComboBox = new QComboBox(this);
+  monthComboBox->addItems(monthsInRus);
+  monthComboBox->setCurrentIndex(date.month() - 1);
+  monthComboBox->setMaximumWidth(
+      QFontMetrics(monthComboBox->font()).boundingRect("10. Октябрь000000").width());
+  headLt->addWidget(monthComboBox);
+  connect(monthComboBox, QOverload<int>::of(&QComboBox::currentIndexChanged),
+          this, &MonthViewer::goMonth);
   auto *backAtYear = new QToolButton(this);
   backAtYear->setFocusPolicy(Qt::NoFocus);
   backAtYear->setText("<<");
@@ -36,7 +53,8 @@ MonthViewer::MonthViewer(Data *_data, QDate _date, QWidget *parent)
   auto *backAtMonth = new QToolButton(this);
   backAtMonth->setFocusPolicy(Qt::NoFocus);
   backAtMonth->setText("<");
-  connect(backAtMonth, &QToolButton::clicked, this, &MonthViewer::goBackAtMonth);
+  connect(backAtMonth, &QToolButton::clicked, this,
+          &MonthViewer::goBackAtMonth);
   headLt->addWidget(backAtMonth);
   auto *cur = new QToolButton(this);
   cur->setFocusPolicy(Qt::NoFocus);
@@ -54,7 +72,7 @@ MonthViewer::MonthViewer(Data *_data, QDate _date, QWidget *parent)
   connect(nextYear, &QToolButton::clicked, this, &MonthViewer::goNextYear);
   headLt->addWidget(nextYear);
   hw->setLayout(headLt);
-  hw->setMaximumHeight(32);
+  hw->setMaximumHeight(40);
   clt->addWidget(hw);
   redraw();
   setLayout(clt);
@@ -73,8 +91,7 @@ void MonthViewer::redraw() {
       connect(w, &DayInMonthWidget::callEventWidget, this,
               &MonthViewer::openEW);
       days.append(w);
-      int dayNumber =
-          (i - 1) * 7 - data->firstDayOfMonth(date) + j + 1;
+      int dayNumber = (i - 1) * 7 - data->firstDayOfMonth(date) + j + 1;
       QDate dayDate = date;
       dayDate.setDate(dayDate.year(), dayDate.month(), 1);
       w->setupData(dayDate, dayNumber);
@@ -89,6 +106,7 @@ void MonthViewer::redraw() {
   } else
     clt->addWidget(gw);
   gwo = gw;
+  updateHeader();
 }
 
 void MonthViewer::openEW(Event ev) {
@@ -140,4 +158,21 @@ void MonthViewer::goNextYear() {
 void MonthViewer::goCurrent() {
   date = QDate::currentDate();
   redraw();
+}
+
+void MonthViewer::goYear(int year) {
+  date.setDate(year, date.month(), 1);
+  redraw();
+}
+
+void MonthViewer::goMonth(int month) {
+  date.setDate(date.year(), month + 1, 1);
+  redraw();
+}
+
+void MonthViewer::updateHeader() {
+  if (yearSpinBox)
+    yearSpinBox->setValue(date.year());
+  if (monthComboBox)
+    monthComboBox->setCurrentIndex(date.month() - 1);
 }

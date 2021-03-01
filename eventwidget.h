@@ -28,6 +28,7 @@ private:
   QGridLayout *cl = nullptr;
   QWidget *le = nullptr;
   void openEE();
+  void eeUpdated(Event ev);
   void updateEvents(Event ev);
   QDate getDateFromEvent(Event ev) {
     QDate date = QDate::currentDate();

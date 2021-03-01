@@ -80,8 +80,34 @@ bool SQLHandler::appendEvent(Event event) {
 }
 
 bool SQLHandler::editEvent(Event oe, Event ne) {
-  removeEvent(oe);
-  return appendEvent(ne);
+  sql.open();
+  auto q = QSqlQuery(sql);
+  if (oe.cyclicByMonth)
+    for (quint8 i = 0; i < 12; i++)
+      q.exec("DELETE FROM " + months[i] + " WHERE label = \"" + oe.name +
+             "\" AND day = " + QString::number(oe.day) +
+             " AND year = " + QString::number(oe.year) + ";");
+  else
+    q.exec("DELETE FROM " + months[oe.month - 1] + " WHERE label = \"" +
+           oe.name + "\" AND day = " + QString::number(oe.day) +
+           " AND year = " + QString::number(oe.year) + ";");
+  if (ne.cyclicByMonth)
+    for (quint8 i = 0; i < 12; i++)
+      q.exec("INSERT INTO " + months[i] + " VALUES (\"" + ne.name + "\", " +
+             QString::number(ne.day) + ", " + QString::number(ne.year) +
+             ", \"" + ne.desc + "\", " + QString::number(ne.cyclicByYear) +
+             ", " + QString::number(ne.cyclicByMonth) + ", " +
+             QString::number(ne.cathegory) + ", " + QString::number(ne.color) +
+             ");");
+  else
+    q.exec("INSERT INTO " + months[ne.month - 1] + " VALUES (\"" + ne.name +
+           "\", " + QString::number(ne.day) + ", " + QString::number(ne.year) +
+           ", \"" + ne.desc + "\", " + QString::number(ne.cyclicByYear) + ", " +
+           QString::number(ne.cyclicByMonth) + ", " +
+           QString::number(ne.cathegory) + ", " + QString::number(ne.color) +
+           ");");
+  sql.close();
+  return q.lastError().isValid();
 }
 
 bool SQLHandler::removeEvent(Event event) {

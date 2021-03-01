@@ -1,5 +1,4 @@
 #include "eventcreator.h"
-#include <iostream>
 
 EventCreator::EventCreator(Data *_data, QWidget *parent) : QDialog(parent) {
   data = _data;
@@ -206,7 +205,7 @@ EventCreator::EventCreator(Data *_data, Event _editing, QWidget *parent)
     setupContacts();
   // Соединения
   connect(cb, &TypeBox::changed, this, &EventCreator::eventTypeChanged);
-  connect(addPushButton, &QPushButton::pressed, this, &EventCreator::saveEvent);
+  connect(addPushButton, &QPushButton::clicked, this, &EventCreator::saveEvent);
 }
 
 QHBoxLayout *EventCreator::getHLt() {
@@ -311,11 +310,12 @@ void EventCreator::saveEvent() {
   if (not edit) {
     data->sql->appendEvent(event);
     emit closed();
+    if (cb->currentIndex() == 0)
+      titleLineEdit->setText("День рождения ");
   }
   else {
     data->sql->editEvent(editing, event);
     emit edited(event);
-    emit closed();
     close();
   }
 }

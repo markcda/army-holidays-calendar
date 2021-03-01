@@ -19,8 +19,13 @@ EventWidget::EventWidget(Data *_data, Event _ev, QWidget *parent)
 
 void EventWidget::openEE() {
   auto *ee = new EventCreator(data, event, this);
-  connect(ee, &EventCreator::edited, this, &EventWidget::updateEvents);
+  connect(ee, &EventCreator::edited, this, &EventWidget::eeUpdated);
   ee->show();
+}
+
+void EventWidget::eeUpdated(Event ev) {
+  updateEvents(ev);
+  emit updated(ev);
 }
 
 void EventWidget::updateEvents(Event ev) {
