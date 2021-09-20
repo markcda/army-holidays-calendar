@@ -19,12 +19,12 @@ MonthViewer::MonthViewer(Data *_data, QDate _date, QWidget *parent)
   connect(backBtn, &QToolButton::clicked, this, [this]() { emit openWV(); });
   headLt->addWidget(backBtn);
   auto *titleLbl =
-      new QLabel("Календарь воинских событий войсковой части 26178", this);
+      new QLabel("Календарь событий", this);
   titleLbl->setFont(font);
   titleLbl->setIndent(9);
   titleLbl->setMaximumHeight(
       QFontMetrics(titleLbl->font())
-          .boundingRect("Календарь событий в войсковой части 26178")
+          .boundingRect("Календарь событий")
           .height() -
       1);
   headLt->addWidget(titleLbl);

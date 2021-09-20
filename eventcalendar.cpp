@@ -1,7 +1,7 @@
 #include "eventcalendar.h"
 
 EventCalendar::EventCalendar(QWidget *parent) : QMainWindow(parent) {
-  setWindowTitle("Календарь Армии России, в/ч 26178");
+  setWindowTitle("Календарь");
   setWindowIcon(QIcon(":/arts/64/office-calendar.svg"));
   data = new Data();
   if (data->getSetting("ec-fs").toString() != "no") {

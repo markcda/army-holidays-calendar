@@ -10,7 +10,7 @@ public:
 signals:
   void changed();
 private:
-  const QStringList eventTypes = {"День рождения", "День воинской славы", "Событие"};
+  const QStringList eventTypes = {"День рождения", "Праздник", "Событие"};
 };
 
 #endif

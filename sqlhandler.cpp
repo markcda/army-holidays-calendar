@@ -1,5 +1,4 @@
 #include "sqlhandler.h"
-#include <iostream>
 
 SQLHandler::SQLHandler() {
   sql = QSqlDatabase::addDatabase("QSQLITE");
